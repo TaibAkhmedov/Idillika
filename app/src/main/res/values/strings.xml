@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">IdillikaJava</string>
+    <string name="title_main">IDILLIKA</string>
+    <string name="catalog_title">АКСЕССУАРЫ</string>
+    <string name="menu_basket">Корзина</string>
+    <string name="item_title">Gucci</string>
+    <string name="item_description">Описание товара</string>
+    <string name="item_price">2324</string>
+    <string name="basket_title">КОРЗИНА</string>
+    <string name="basket_text1">Ой, пусто!</string>
+    <string name="basket_text2">Ваша корзина пока пуста, добавьте понравившийся товар.</string>
+    <string name="clear_basket">Очистить корзину</string>
+
+</resources>
