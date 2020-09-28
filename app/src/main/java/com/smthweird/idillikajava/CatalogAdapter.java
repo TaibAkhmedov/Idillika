@@ -2,7 +2,6 @@ package com.smthweird.idillikajava;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,12 +20,10 @@ import java.util.List;
 public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogViewHolder> {
 
     List<CatalogItem> catalogList;
-    private static Context context;
     static SharedPreferences sharedPreferences;
 
-    public CatalogAdapter(Context context, List<CatalogItem> catalogList) {
+    public CatalogAdapter(List<CatalogItem> catalogList) {
         this.catalogList = catalogList;
-        this.context = context;
     }
 
     @NonNull
@@ -37,20 +33,6 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogV
         return new CatalogViewHolder(view);
     }
 
-    private static void savePrefs(int id, boolean favorite_value) {
-        sharedPreferences = context.getSharedPreferences("Favorite_Checked", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean(String.valueOf(id), favorite_value).apply();
-    }
-
-    private static boolean loadPrefs(int id) {
-        sharedPreferences = context.getSharedPreferences("Favorite_Checked", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(String.valueOf(id), false);
-    }
-
-    private static void deletePrefs(int id) {
-        sharedPreferences = context.getSharedPreferences("Favorite_Checked", Context.MODE_PRIVATE);
-        sharedPreferences.edit().remove(String.valueOf(id)).apply();
-    }
 
     @Override
     public void onBindViewHolder(@NonNull CatalogViewHolder holder, int position) {
@@ -68,6 +50,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogV
     }
 
     public static class CatalogViewHolder extends RecyclerView.ViewHolder {
+        private static Context context;
         private ImageView catalogImage;
         private TextView catalogBrand;
         private TextView catalogTitle;
@@ -78,6 +61,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogV
 
         public CatalogViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
             catalogImage = itemView.findViewById(R.id.ImageView_catalogImage);
             catalogBrand = itemView.findViewById(R.id.TextView_brand);
             catalogTitle = itemView.findViewById(R.id.TextView_description);
@@ -99,7 +83,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogV
                 public void onCheckedChanged(CompoundButton buttonView, boolean favorite_value) {
                     if (catalogFavorite.isChecked()) {
                         favoriteChecked();
-                    } else if (catalogFavorite.isEnabled()){
+                    } else if (catalogFavorite.isEnabled()) {
                         favoriteUnChecked();
                     }
                 }
@@ -128,6 +112,21 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogV
             deletePrefs(mCatalogItem.getId());
         }
 
+
+        private static void savePrefs(int id, boolean favorite_value) {
+            sharedPreferences = context.getSharedPreferences("Favorite_Checked", Context.MODE_PRIVATE);
+            sharedPreferences.edit().putBoolean(String.valueOf(id), favorite_value).apply();
+        }
+
+        private static boolean loadPrefs(int id) {
+            sharedPreferences = context.getSharedPreferences("Favorite_Checked", Context.MODE_PRIVATE);
+            return sharedPreferences.getBoolean(String.valueOf(id), false);
+        }
+
+        private static void deletePrefs(int id) {
+            sharedPreferences = context.getSharedPreferences("Favorite_Checked", Context.MODE_PRIVATE);
+            sharedPreferences.edit().remove(String.valueOf(id)).apply();
+        }
 
     }
 

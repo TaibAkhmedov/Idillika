@@ -41,7 +41,7 @@ public class CatalogActivity extends AppCompatActivity {
             public void onResponse(Call<List<CatalogItem>> call, Response<List<CatalogItem>> response) {
                 if (response.isSuccessful()) {
                     catalogList = response.body();
-                    adapter = new CatalogAdapter(CatalogActivity.this, catalogList);
+                    adapter = new CatalogAdapter(catalogList);
                     recyclerView.setAdapter(adapter);
                 }
 
